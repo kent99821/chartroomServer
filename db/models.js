@@ -42,3 +42,16 @@ const UserModel = mongoose.model('user', userSchema) // 集合为: users
 // 2.3. 向外暴露Model
 exports.UserModel = UserModel
 
+//定义chats集合的文档结构
+const chatSchema=mongoose.Schema({
+     from:{type:String,required:true},//发送者
+     to:{type:String,required:true},//接收者
+     chat_id:{type:String,required:true},//from和to组成的字符串
+     content:{type:String,required:true},//内容
+     read:{type:Boolean,default:false},//标识是否已读
+     create_time:{type:Number}//创建时间
+})
+//定义Model（与集合对应，可以操作集合）
+const ChatModel=mongoose.model('chat',chatSchema)
+//向外暴露Model
+exports.ChatModel=ChatModel
