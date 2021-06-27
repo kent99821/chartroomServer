@@ -41,3 +41,4 @@ const userSchema = mongoose.Schema({
 const UserModel = mongoose.model('user', userSchema) // 集合为: users
 // 2.3. 向外暴露Model
 exports.UserModel = UserModel
+
