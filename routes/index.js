@@ -82,17 +82,25 @@ router.get('/userlist',function (req,res){
 //获取当前用户的相关聊天信息列表
 router.get('/msglist',function (req,res){
   const userid=req.cookies.userid
-  UserModel.find((function (err,userDocs){
-    const users=userDocs.reduce((users,user)=>{
-      users[user._id]={username:user.username,header:user.header}
+
+
+  UserModel.find(function (err, userDocs) {
+
+    const users = userDocs.reduce((users, user) => {
+      users[user._id] = {username: user.username, header: user.header}
       return users
-    },{})
-  //  查询聊天信息
-  //  参数：查询条件 过滤条件 回调函数
-    ChatModel.find({'$or':[{from:userid},{to:userid}]},filter,function (err,chatMsgs){
-      res.send({code:0,data:{users,chatMsgs}})
+    } , {})
+    /*
+    查询userid相关的所有聊天信息
+     参数1: 查询条件
+     参数2: 过滤条件
+     参数3: 回调函数
+    */
+    ChatModel.find({'$or': [{from: userid}, {to: userid}]}, filter, function (err, chatMsgs) {
+      // 返回包含所有用户和当前用户相关的所有聊天消息的数据
+      res.send({code: 0, data: {users, chatMsgs}})
     })
-  }))
+  })
 })
 //修改指定消息为已读
 router.post('/readmsg',function (req,res){
